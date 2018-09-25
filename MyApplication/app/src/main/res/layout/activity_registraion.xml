@@ -3,18 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.snackbar.RegistrationFragment"
-    android:orientation="horizontal">
+    tools:context=".ui.registration.RegistrationActivity"
+    android:id="@+id/layout_registration_activity">
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/button_snackbar_send"/>
-
-    <EditText
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/editText_" />
-
+        android:id="@+id/registration_fragment_container" />
 
 </LinearLayout>
