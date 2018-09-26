@@ -11,11 +11,12 @@ import android.widget.TextView;
 
 import de.netalic.myapplication.R;
 
-public class ShowFragment extends Fragment {
+public class ShowFragment extends Fragment implements ShowContract.View {
 
     private View mRootView;
-    private ShowPresenter mShowPresenter;
+    private ShowContract.Presenter mShowPresenter;
     private TextView mTextView_editText;
+    private static final String OUTPUT = "output";
 
     @Nullable
     @Override
@@ -29,13 +30,13 @@ public class ShowFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTextView_editText = mRootView.findViewById(R.id.textView_show_editText);
-        mTextView_editText.setText(getArguments().getString("output"));
+        mTextView_editText.setText(getArguments().getString(OUTPUT));
     }
 
     public static ShowFragment newInstance(String mOutput) {
 
         Bundle args = new Bundle();
-        args.putString("output", mOutput);
+        args.putString(OUTPUT, mOutput);
         ShowFragment fragment = new ShowFragment();
         fragment.setArguments(args);
         return fragment;

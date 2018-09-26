@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="button_text">OK</string>
-    <string name="snackbar_err">input is not valid</string>
-    <string name="resErr">response error</string>
-    <string name="editText_input">editText:</string>
+    <string name="snackbar_error">Input is not valid</string>
+    <string name="response_error">Response error</string>
+    <string name="editText_input">EditText:</string>
 </resources>

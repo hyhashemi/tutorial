@@ -12,9 +12,9 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Log.e("Registration Activity", "onCreate");
         setContentView(R.layout.activity_registraion);
-        RegistrationFragment registrationFragment = (RegistrationFragment) getSupportFragmentManager().findFragmentById(R.id.layout_registration_fragment);
+        RegistrationFragment registrationFragment = (RegistrationFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.layout_registration_fragment);
         if (registrationFragment == null){
             registrationFragment = new RegistrationFragment();
         }

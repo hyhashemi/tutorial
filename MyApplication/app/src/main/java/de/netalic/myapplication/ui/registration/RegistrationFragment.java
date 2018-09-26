@@ -17,11 +17,11 @@ import android.widget.Toast;
 import de.netalic.myapplication.R;
 import de.netalic.myapplication.ui.show.ShowActivity;
 
-public class RegistrationFragment extends Fragment {
+public class RegistrationFragment extends Fragment implements RegistrationContract.View{
 
     private View mRootView;
     private EditText mEditText;
-    private RegistrationPresenter mPresenter;
+    private RegistrationContract.Presenter mPresenter;
     private String mOutput;
 
     @Nullable
@@ -36,14 +36,14 @@ public class RegistrationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button mButton = mRootView.findViewById(R.id.button_registration_send);
+        Button button = mRootView.findViewById(R.id.button_registration_send);
         mEditText = mRootView.findViewById(R.id.editText_registration);
-        mButton.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mOutput = mEditText.getText().toString();
                 if (mOutput.isEmpty()) {
-                    Snackbar snackbar = Snackbar.make(mRootView, R.string.snackbar_err, Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(mRootView, R.string.snackbar_error, Snackbar.LENGTH_LONG);
                     snackbar.show();
                 } else {
                     mPresenter.request();
@@ -53,13 +53,15 @@ public class RegistrationFragment extends Fragment {
         });
     }
 
+    @Override
     public void navigateToShowActivity() {
         Intent show = new Intent(getContext(), ShowActivity.class);
         show.putExtra("output", mOutput);
         startActivity(show);
     }
 
+    @Override
     public void notFound() {
-        Toast.makeText(getContext(),R.string.resErr, Toast.LENGTH_LONG);
+        Toast.makeText(getContext(),R.string.response_error, Toast.LENGTH_LONG);
     }
 }
