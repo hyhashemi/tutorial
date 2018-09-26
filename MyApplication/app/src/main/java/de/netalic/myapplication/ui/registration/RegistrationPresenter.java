@@ -32,7 +32,7 @@ public class RegistrationPresenter implements RegistrationContract.Presenter{
             @Override
             public void onResponse(Call<List<Speciality>> call, Response<List<Speciality>> response) {
                 if (response.code() == 200) {
-                  mRegistrationFragment.navigateToShowActivity();
+                  mRegistrationFragment.navigateToShowActivity(response.body());
                 }
                 else{
                     mRegistrationFragment.notFound();

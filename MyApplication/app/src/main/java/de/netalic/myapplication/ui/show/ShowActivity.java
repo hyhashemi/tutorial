@@ -1,16 +1,19 @@
 package de.netalic.myapplication.ui.show;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
+import java.util.List;
 
 import de.netalic.myapplication.R;
+import de.netalic.myapplication.data.model.Speciality;
 
 public class ShowActivity extends AppCompatActivity {
 
-    private String mOutput;
     private String mTitle;
+    private List<Speciality> mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,11 +22,12 @@ public class ShowActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
-            mOutput = extras.getString("output");
+            mData = extras.getParcelableArrayList("data");
         }
+
         ShowFragment showFragment = (ShowFragment) getSupportFragmentManager().findFragmentById(R.id.layout_show_fragment);
         if (showFragment == null){
-            showFragment = ShowFragment.newInstance(mOutput);
+            showFragment = ShowFragment.newInstance(mData);
         }
 
         FragmentManager fragmentManager = this.getSupportFragmentManager();

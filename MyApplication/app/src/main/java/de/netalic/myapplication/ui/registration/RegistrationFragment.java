@@ -2,6 +2,7 @@ package de.netalic.myapplication.ui.registration;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -14,7 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import de.netalic.myapplication.R;
+import de.netalic.myapplication.data.model.Speciality;
 import de.netalic.myapplication.ui.show.ShowActivity;
 
 public class RegistrationFragment extends Fragment implements RegistrationContract.View{
@@ -23,6 +29,7 @@ public class RegistrationFragment extends Fragment implements RegistrationContra
     private EditText mEditText;
     private RegistrationContract.Presenter mPresenter;
     private String mOutput;
+    private static final String DATA = "data";
 
     @Nullable
     @Override
@@ -54,9 +61,9 @@ public class RegistrationFragment extends Fragment implements RegistrationContra
     }
 
     @Override
-    public void navigateToShowActivity() {
+    public void navigateToShowActivity(List<Speciality> specialities) {
         Intent show = new Intent(getContext(), ShowActivity.class);
-        show.putExtra("output", mOutput);
+        show.putParcelableArrayListExtra("data", (ArrayList<? extends Parcelable>) specialities);
         startActivity(show);
     }
 
