@@ -19,7 +19,6 @@ public class ShowActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
-
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
             mData = extras.getParcelableArrayList("data");
@@ -35,4 +34,5 @@ public class ShowActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.show_fragment_container, showFragment);
         fragmentTransaction.commit();
     }
+
 }
