@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,6 @@ public class RegistrationFragment extends Fragment implements RegistrationContra
     private EditText mEditText;
     private RegistrationContract.Presenter mPresenter;
     private String mOutput;
-    private static final String DATA = "data";
 
     @Nullable
     @Override

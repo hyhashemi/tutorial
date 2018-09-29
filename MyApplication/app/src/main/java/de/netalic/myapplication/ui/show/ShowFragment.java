@@ -1,6 +1,5 @@
 package de.netalic.myapplication.ui.show;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -16,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +29,6 @@ public class ShowFragment extends Fragment implements ShowContract.View {
     private ShowContract.Presenter mShowPresenter;
     private static final String DATA = "data";
     private List<Speciality> mData;
-    private RecyclerAdapter mAdapter;
-    private Toolbar mToolbar;
 
     @Nullable
     @Override
@@ -54,11 +50,11 @@ public class ShowFragment extends Fragment implements ShowContract.View {
         mData = getArguments().getParcelableArrayList(DATA);
         RecyclerView recyclerView = mRootView.findViewById(R.id.recyclerView_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new RecyclerAdapter(getContext(), mData);
-        recyclerView.setAdapter(mAdapter);
-        mToolbar = mRootView.findViewById(R.id.toolbar);
+        RecyclerAdapter adapter = new RecyclerAdapter(getContext(), mData);
+        recyclerView.setAdapter(adapter);
+        Toolbar toolbar = mRootView.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(mToolbar);
+        activity.setSupportActionBar(toolbar);
     }
 
 
@@ -75,8 +71,7 @@ public class ShowFragment extends Fragment implements ShowContract.View {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.push:
-                //pushToDatabase();
-                toast();
+                pushToDatabase();
 
         }
         return super.onOptionsItemSelected(item);
@@ -84,13 +79,10 @@ public class ShowFragment extends Fragment implements ShowContract.View {
 
     private void pushToDatabase() {
         MyDatabase db = new MyDatabase(getContext());
+        db.deleteDatabase();
         for (int i = 0; i < mData.size(); i++){
             db.createRecords(mData.get(i).getId(), mData.get(i).getTitle());
         }
     }
 
-    @Override
-    public void toast() {
-        Toast.makeText(getContext(), "push to database", Toast.LENGTH_LONG);
-    }
 }

@@ -12,8 +12,8 @@ import de.netalic.myapplication.data.model.Speciality;
 
 public class ShowActivity extends AppCompatActivity {
 
-    private String mTitle;
     private List<Speciality> mData;
+    private final static String DATA = "data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class ShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show);
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
-            mData = extras.getParcelableArrayList("data");
+            mData = extras.getParcelableArrayList(DATA);
         }
 
         ShowFragment showFragment = (ShowFragment) getSupportFragmentManager().findFragmentById(R.id.layout_show_fragment);

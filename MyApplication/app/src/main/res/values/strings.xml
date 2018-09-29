@@ -5,4 +5,5 @@
     <string name="response_error">Response error</string>
     <string name="editText_input">EditText:</string>
     <string name="click_button">PUSH</string>
+    <string name="pushToDatabase">Push to database</string>
 </resources>
