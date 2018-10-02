@@ -5,11 +5,7 @@
     android:id="@+id/layout_show_fragment"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/toolbar"
-        android:background="#444444"/>
+    <include layout="@layout/show_toolbar" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

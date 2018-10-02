@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
         android:id="@+id/push"
-        android:orderInCategory="100"
+        android:orderInCategory="400"
         android:title="@string/click_button"
-        app:showAsAction="always" />
+        android:icon="@drawable/push"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/add"
+        android:orderInCategory="100"
+        android:icon="@drawable/add"
+        app:showAsAction="always"
+        android:title="@string/add" />
+    <item
+        android:id="@+id/delete"
+        android:orderInCategory="200"
+        android:title="@string/delete"
+        android:icon="@drawable/delete"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/edit"
+        android:orderInCategory="300"
+        android:title="@string/edit"
+        android:icon="@drawable/edit"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -13,7 +13,13 @@ public class Speciality implements Parcelable{
     @SerializedName("title")
     private String mTitle;
 
-    protected Speciality(Parcel in) {
+    public Speciality(int id, String title){
+        this.mTitle = title;
+        this.mId = id;
+    }
+
+
+    public Speciality(Parcel in) {
         mId = in.readInt();
         mTitle = in.readString();
     }
@@ -29,6 +35,7 @@ public class Speciality implements Parcelable{
             return new Speciality[size];
         }
     };
+
 
     public void setId(int id){
         mId = id;

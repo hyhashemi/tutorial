@@ -6,4 +6,7 @@
     <string name="editText_input">EditText:</string>
     <string name="click_button">PUSH</string>
     <string name="pushToDatabase">Push to database</string>
+    <string name="add">ADD</string>
+    <string name="delete">delete</string>
+    <string name="edit">edit</string>
 </resources>
