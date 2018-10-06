@@ -1,7 +1,7 @@
 package de.netalic.myapplication.ui.registration;
 
+import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +32,7 @@ public class RegistrationPresenter implements RegistrationContract.Presenter {
     }
 
     public void bindRequest(String activationCode){
-        apiInterface.bind(phoneNumber,"123456789", mRegistrationFragment.mPhoneNumeber, "").enqueue(new Callback<JSONObject>() {
+        apiInterface.bind(phoneNumber,"123456789", mRegistrationFragment.mPhoneNumber, "").enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
                 JSONObject jsonObject = response.body();
@@ -52,13 +52,14 @@ public class RegistrationPresenter implements RegistrationContract.Presenter {
 
     }
 
-    public void claimRequest(String phoneNumber){
+    public void claimRequest(final String phoneNumber){
         this.phoneNumber = phoneNumber;
 
-        apiInterface.claim("123456789", phoneNumber).enqueue(new Callback<JSONObject>() {
+        apiInterface.claim("2b6f0cc904d137be2e1730235f5664094b831186", phoneNumber).enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
-                Log.e("send", "onResponse: " );
+                Log.e("status", String.valueOf(response.code()) );
+                mRegistrationFragment.navigateToPhoneConfirm();
             }
 
             @Override
