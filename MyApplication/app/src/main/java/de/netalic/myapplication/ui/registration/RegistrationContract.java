@@ -1,18 +1,10 @@
 package de.netalic.myapplication.ui.registration;
 
-import java.util.List;
+public class RegistrationContract {
+    public interface View{
 
-import de.netalic.myapplication.data.model.Speciality;
-
-public interface RegistrationContract {
-
-    interface View{
-        void notFound();
-        void navigateToShowActivity(List<Speciality> specialities);
     }
+    public interface Presenter{
 
-    interface Presenter{
-
-        void request();
     }
 }

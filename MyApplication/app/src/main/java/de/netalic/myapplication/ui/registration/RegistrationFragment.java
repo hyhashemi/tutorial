@@ -1,72 +1,59 @@
 package de.netalic.myapplication.ui.registration;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import de.netalic.myapplication.R;
-import de.netalic.myapplication.data.model.Speciality;
-import de.netalic.myapplication.ui.show.ShowActivity;
 
-public class RegistrationFragment extends Fragment implements RegistrationContract.View{
+public class RegistrationFragment extends Fragment implements RegistrationContract.View {
 
-    private View mRootView;
-    private EditText mEditText;
-    private RegistrationContract.Presenter mPresenter;
-    private String mOutput;
+    public View mRootView;
+    public RegistrationPresenter mRegistrationPresenter;
+    public String mPhoneNumeber;
+    public EditText mEditText;
+    public String mActivationCode;
+    public String mToken;
+    public Button mButton;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_registration, null);
-        Log.e("Registration fragment", "onCreateView: ");
-        mPresenter = new RegistrationPresenter(this);
+        mRootView = inflater.inflate(R.layout.registration_fragment_layout, null);
+        mRegistrationPresenter = new RegistrationPresenter(this);
         return mRootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Button button = mRootView.findViewById(R.id.button_registration_send);
-        mEditText = mRootView.findViewById(R.id.editText_registration);
-        button.setOnClickListener(new View.OnClickListener() {
+        mEditText = mRootView.findViewById(R.id.phone_number);
+        mPhoneNumeber = mEditText.getText().toString();
+        mButton = mRootView.findViewById(R.id.button_registration_send);
+        mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOutput = mEditText.getText().toString();
-                if (mOutput.isEmpty()) {
-                    Snackbar snackbar = Snackbar.make(mRootView, R.string.snackbar_error, Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                } else {
-                    mPresenter.request();
-                }
-
+                mRegistrationPresenter.claimRequest(mPhoneNumeber);
             }
         });
+
     }
 
-    @Override
-    public void navigateToShowActivity(List<Speciality> specialities) {
-        Intent show = new Intent(getContext(), ShowActivity.class);
-        show.putParcelableArrayListExtra("data", (ArrayList<? extends Parcelable>) specialities);
-        startActivity(show);
+    public void getActivationCode(String activationCode){
+        this.mActivationCode = activationCode;
     }
 
-    @Override
-    public void notFound() {
-        Toast.makeText(getContext(),R.string.response_error, Toast.LENGTH_LONG);
+    public void getToken(String token){
+        this.mToken = token;
+    }
+
+    public String smsRead(){
+
+        return null;
     }
 }

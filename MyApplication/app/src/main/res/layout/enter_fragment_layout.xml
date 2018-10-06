@@ -3,19 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.registration.RegistrationFragment"
+    tools:context=".ui.enter.EnterFragment"
     android:orientation="horizontal"
-    android:id="@+id/layout_registration_fragment"
+    android:id="@+id/layout_enter_fragment"
     android:gravity="center">
     <Button
-        android:id="@+id/button_registration_send"
+        android:id="@+id/button_enter_send"
         android:layout_width="62dp"
         android:layout_height="65dp"
         android:layout_margin="8dp"
         android:background="@color/colorAccent"
         android:text="@string/button_text" />
     <EditText
-        android:id="@+id/editText_registration"
+        android:id="@+id/editText_enter"
         android:layout_width="190dp"
         android:layout_height="37dp"
         android:layout_margin="8dp"

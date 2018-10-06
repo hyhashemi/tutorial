@@ -2,11 +2,12 @@ package de.netalic.myapplication.ui.show;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -18,10 +19,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private LayoutInflater mInflater;
     private List<Speciality> mData;
-    private ItemClickListener mItemClickListener;
     private Context mContext;
+    private int mSelectedItem = -1;
 
-    public RecyclerAdapter(Context context, List<Speciality> data){
+    public int getSelectedItem() {
+        return mSelectedItem;
+    }
+
+    public RecyclerAdapter(Context context, List<Speciality> data) {
         this.mData = data;
         this.mInflater = LayoutInflater.from(context);
         this.mContext = context;
@@ -36,8 +41,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+
         viewHolder.mId.setText(String.valueOf(mData.get(i).getId()));
         viewHolder.mTitle.setText(mData.get(i).getTitle());
+
+        if (mSelectedItem >= 0 && i == mSelectedItem) {
+            viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+        } else {
+            viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorWhite));
+        }
     }
 
     @Override
@@ -45,7 +57,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return mData.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mId;
         private TextView mTitle;
@@ -55,22 +67,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             mId = itemView.findViewById(R.id.textView_speciality_id);
             mTitle = itemView.findViewById(R.id.textView_speciality_title);
 
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mSelectedItem = getAdapterPosition();
+                    notifyDataSetChanged();
+                }
+            });
         }
 
-        @Override
-        public void onClick(View view) {
-            mItemClickListener.onItemClick(view, getAdapterPosition());
-            LinearLayout mLayout = view.findViewById(R.id.layout_speciality);
-            mLayout.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
-            setClickListener(mItemClickListener);
-        }
-    }
-    void setClickListener(ItemClickListener itemClickListener) {
-        this.mItemClickListener = itemClickListener;
-    }
-
-    public interface ItemClickListener{
-        void onItemClick(View view, int position);
     }
 }

@@ -1,8 +1,11 @@
 package de.netalic.myapplication.ui.registration;
 
-import java.util.List;
+import android.util.Log;
+import android.widget.Toast;
 
-import de.netalic.myapplication.data.model.Speciality;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import de.netalic.myapplication.data.remote.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -10,39 +13,59 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RegistrationPresenter implements RegistrationContract.Presenter{
+public class RegistrationPresenter implements RegistrationContract.Presenter {
 
-    private RegistrationContract.View mRegistrationFragment;
+    public RegistrationFragment mRegistrationFragment;
+    private String mToken;
+    private String phoneNumber;
+    private ApiInterface apiInterface;
+    private String activationCode;
 
-    public RegistrationPresenter(RegistrationFragment registrationFragment){
+    public RegistrationPresenter(RegistrationFragment registrationFragment) {
         this.mRegistrationFragment = registrationFragment;
-    }
-
-    @Override
-    public void request() {
-
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("https://nightly-nc.carrene.com/")
+                .baseUrl("http://nightly.alpha.carrene.com/")
                 .addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit = builder.build();
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        apiInterface = retrofit.create(ApiInterface.class);
+    }
 
-        apiInterface.get().enqueue(new Callback<List<Speciality>>() {
+    public void bindRequest(String activationCode){
+        apiInterface.bind(phoneNumber,"123456789", mRegistrationFragment.mPhoneNumeber, "").enqueue(new Callback<JSONObject>() {
             @Override
-            public void onResponse(Call<List<Speciality>> call, Response<List<Speciality>> response) {
-                if (response.code() == 200) {
-                  mRegistrationFragment.navigateToShowActivity(response.body());
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                JSONObject jsonObject = response.body();
+                try {
+                    mToken = jsonObject.getString("token");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else{
-                    mRegistrationFragment.notFound();
-                }
+                mRegistrationFragment.getToken(mToken);
             }
 
             @Override
-            public void onFailure(Call<List<Speciality>> call, Throwable t) {
+            public void onFailure(Call<JSONObject> call, Throwable t) {
 
             }
         });
+
+    }
+
+    public void claimRequest(String phoneNumber){
+        this.phoneNumber = phoneNumber;
+
+        apiInterface.claim("123456789", phoneNumber).enqueue(new Callback<JSONObject>() {
+            @Override
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                Log.e("send", "onResponse: " );
+            }
+
+            @Override
+            public void onFailure(Call<JSONObject> call, Throwable t) {
+                Log.e("send", "onFail: " );
+            }
+        });
+
     }
 }

@@ -9,4 +9,8 @@
     <string name="add">ADD</string>
     <string name="delete">delete</string>
     <string name="edit">edit</string>
+    <string name="addNotif">Are you sure you want to add this entry?</string>
+    <string name="addTitle">Add this speciality:</string>
+    <string name="editTitle">Edit this speciality:</string>
+    <string name="editNotif">Are you sure you want to edit this entry?</string>
 </resources>
