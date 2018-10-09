@@ -1,10 +1,11 @@
 package de.netalic.myapplication.ui.registration;
 
-public class RegistrationContract {
-    public interface View{
-
+public interface RegistrationContract {
+    interface View{
+        void navigateToPhoneConfirm();
+        void snackbarError();
     }
-    public interface Presenter{
+    interface Presenter{
 
     }
 }

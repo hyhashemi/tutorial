@@ -4,17 +4,30 @@
     android:layout_height="match_parent"
     android:id="@+id/registration_fragment_layout"
     android:orientation="vertical">
+
+    <include layout="@layout/show_toolbar"
+        android:id="@+id/toolbar"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="center">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/phone_number"/>
+            android:id="@+id/phone_number"
+            android:hint="@string/phone_number"/>
+    </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/button_registration_send"
-        android:text="send"
+        android:text="@string/register"
         android:background="@color/colorAccent"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:gravity="center"/>
 
 </LinearLayout>

@@ -1,17 +1,14 @@
 package de.netalic.myapplication.ui.show;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
 import de.netalic.myapplication.R;
 import de.netalic.myapplication.data.model.Speciality;
+import de.netalic.myapplication.ui.Base.BaseActivity;
 
-public class ShowActivity extends AppCompatActivity {
+public class ShowActivity extends BaseActivity{
 
     private List<Speciality> mData;
     private final static String DATA = "data";
@@ -28,15 +25,8 @@ public class ShowActivity extends AppCompatActivity {
         ShowFragment showFragment = (ShowFragment) getSupportFragmentManager().findFragmentById(R.id.layout_show_fragment);
         if (showFragment == null){
             showFragment = ShowFragment.newInstance(mData);
-            replaceFragment(showFragment);
+            replaceFragment(showFragment, R.id.show_fragment_container);
         }
-    }
-
-    public void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.show_fragment_container, fragment);
-        fragmentTransaction.commit();
     }
 
 }

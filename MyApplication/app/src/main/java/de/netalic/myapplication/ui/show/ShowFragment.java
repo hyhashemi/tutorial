@@ -36,13 +36,11 @@ public class ShowFragment extends Fragment implements ShowContract.View {
     private List<Speciality> mData;
     private int mPositionClicked;
     private int mCounter = 34;
-    private Menu mMenu;
     private AlertDialog.Builder mBuilderEdit;
     private AlertDialog.Builder mBuilderAdd;
     private EditText mAlertEdit;
     private EditText mAlertAdd;
     private RecyclerAdapter mAdapter;
-    private RecyclerView mRecyclerView;
 
 
     @Nullable
@@ -57,21 +55,21 @@ public class ShowFragment extends Fragment implements ShowContract.View {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.toolbar_menu, menu);
-        this.mMenu = menu;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mData = getArguments().getParcelableArrayList(DATA);
-        mRecyclerView = mRootView.findViewById(R.id.recyclerView_container);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView recyclerView = mRootView.findViewById(R.id.recyclerView_container);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new RecyclerAdapter(getContext(), mData);
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
 
         Toolbar toolbar = mRootView.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setTitle("Specialities");
 
         mBuilderEdit = new AlertDialog.Builder(getContext());
         mBuilderAdd = new AlertDialog.Builder(getContext());

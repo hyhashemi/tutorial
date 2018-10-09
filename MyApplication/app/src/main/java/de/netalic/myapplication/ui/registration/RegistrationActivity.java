@@ -2,14 +2,11 @@ package de.netalic.myapplication.ui.registration;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 
 import de.netalic.myapplication.R;
+import de.netalic.myapplication.ui.Base.BaseActivity;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class RegistrationActivity extends BaseActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,14 +14,7 @@ public class RegistrationActivity extends AppCompatActivity {
         RegistrationFragment fragment = (RegistrationFragment) getSupportFragmentManager().findFragmentById(R.id.registration_fragment_layout);
         if (fragment == null){
             fragment = new RegistrationFragment();
-            replaceFragment(fragment);
+            replaceFragment(fragment, R.id.registration_fragment_container);
         }
-    }
-
-    public void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.registration_fragment_container, fragment);
-        fragmentTransaction.commit();
     }
 }

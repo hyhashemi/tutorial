@@ -1,11 +1,13 @@
 package de.netalic.myapplication.ui.phoneconfirm;
 
-public class PhoneConfirmContract {
+public interface PhoneConfirmContract {
 
-    public interface View{
-
+    interface View{
+        void navigateToShow();
+        void saveToken(String token);
+        void snackbarError();
     }
-    public interface Presenter{
+    interface Presenter{
 
     }
 }

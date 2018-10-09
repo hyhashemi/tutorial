@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="de.netalic.myapplication">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:allowBackup="true"
@@ -25,15 +26,10 @@
         <activity android:name=".ui.enter.EnterActivity" />
         <activity android:name=".ui.show.ShowActivity" />
 
-        <activity android:name=".ui.registration.RegistrationActivity">
-        </activity>
-        <activity android:name=".ui.phoneconfirm.PhoneConfirmActivity"/>
+        <activity android:name=".ui.registration.RegistrationActivity"></activity>
+        <activity android:name=".ui.phoneconfirm.PhoneConfirmActivity" />
 
-        <receiver android:name=".ui.registration.SmsReciever">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
-            </intent-filter>
-        </receiver>
+        <receiver android:name=".receiver.ISmsBroadcastReceiver"/>
 
     </application>
 

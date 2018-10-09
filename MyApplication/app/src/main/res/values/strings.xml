@@ -13,4 +13,11 @@
     <string name="addTitle">Add this speciality:</string>
     <string name="editTitle">Edit this speciality:</string>
     <string name="editNotif">Are you sure you want to edit this entry?</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="activation_code">Activation Code</string>
+    <string name="register">register</string>
+    <string name="phone_not_valid">Phone Is Not Valid</string>
+    <string name="confirm">confirm</string>
+    <string name="activation_error">Activation code is not correct</string>
+    <string name="type_anything">Type anyThing</string>
 </resources>

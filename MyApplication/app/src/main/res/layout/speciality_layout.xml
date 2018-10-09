@@ -21,13 +21,15 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:gravity="start"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/up_text_size"
+            android:textColor="#de000000"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:textSize="12sp"
+            android:textSize="@dimen/bottom_text_size"
             android:gravity="start"
             android:id="@+id/textView_speciality_id"
-            android:paddingLeft="10dp"/>
+            android:textColor="#99000000"/>
     </LinearLayout>
 </LinearLayout>

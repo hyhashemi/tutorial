@@ -2,14 +2,12 @@ package de.netalic.myapplication.ui.phoneconfirm;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import de.netalic.myapplication.R;
+import de.netalic.myapplication.ui.Base.BaseActivity;
 
-public class PhoneConfirmActivity extends AppCompatActivity {
+public class PhoneConfirmActivity extends BaseActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,15 +16,11 @@ public class PhoneConfirmActivity extends AppCompatActivity {
         PhoneConfirmFragment fragment = (PhoneConfirmFragment) getSupportFragmentManager().findFragmentById(R.id.phone_confirm_fragment_container);
         if (fragment == null){
             fragment = PhoneConfirmFragment.newInstance(extras);
-            replaceFragment(fragment);
+            replaceFragment(fragment, R.id.phone_confirm_fragment_container);
         }
-    }
-
-    public void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.phone_confirm_fragment_container, fragment);
-        fragmentTransaction.commit();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Activation Code");
     }
 }
 

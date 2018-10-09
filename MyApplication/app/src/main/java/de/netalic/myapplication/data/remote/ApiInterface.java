@@ -21,7 +21,7 @@ public interface ApiInterface {
     Call<JSONObject> claim(@Field("udid") String udid, @Field("phone") String phone);
 
     @FormUrlEncoded
-    @HTTP(method = "BIND", path = "phones", hasBody = true)
+    @HTTP(method = "BIND", path = "apiv1/phones", hasBody = true)
     Call<JSONObject> bind(@Field("udid") String udid, @Field("phone") String phone, @Field("deviceName") String deviceName, @Field("activationCode") String activationCode);
 
 }
