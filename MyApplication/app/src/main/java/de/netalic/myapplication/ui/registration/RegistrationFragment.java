@@ -63,7 +63,7 @@ public class RegistrationFragment extends Fragment implements RegistrationContra
 
     @Override
     public void snackbarError(){
-        Snackbar snackbar = Snackbar.make(mRootView, R.string.phone_not_valid, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(mRootView, R.string.register_snackbarerror, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 }

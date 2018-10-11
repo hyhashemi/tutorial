@@ -8,7 +8,6 @@ public final class MyDatabase {
 
     private MyDatabaseHelper mDatabaseHelper;
     private SQLiteDatabase mSqLiteDatabase;
-    //TODO(Hanieh) Android team convention CEP
     private static final String TABLE_NAME = "Speciality";
     private static final String COLUMN_NAME_TITLE = "Title";
     private static final String COLUMN_NAME_ID = "Id";

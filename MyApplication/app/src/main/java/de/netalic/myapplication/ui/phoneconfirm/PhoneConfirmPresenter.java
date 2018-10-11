@@ -1,5 +1,6 @@
 package de.netalic.myapplication.ui.phoneconfirm;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -11,6 +12,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class PhoneConfirmPresenter implements PhoneConfirmContract.Presenter {
 
@@ -41,7 +44,7 @@ public class PhoneConfirmPresenter implements PhoneConfirmContract.Presenter {
                     } catch (JSONException e) {
                          e.printStackTrace();
                     }
-                    mPhoneConfirmFragment.saveToken(mToken);
+                    saveToken(mToken);
                     mPhoneConfirmFragment.navigateToShow();
                 }
                 else{
@@ -54,5 +57,12 @@ public class PhoneConfirmPresenter implements PhoneConfirmContract.Presenter {
             }
         });
 
+    }
+
+    private void saveToken(String token) {
+        this.mToken = token;
+        SharedPreferences.Editor editor = mPhoneConfirmFragment.getActivity().getSharedPreferences("token", MODE_PRIVATE).edit();
+        editor.putString("token", mToken);
+        editor.apply();
     }
 }

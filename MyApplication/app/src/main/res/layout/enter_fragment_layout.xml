@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_margin="16dp">
+        android:layout_margin="@dimen/margin_size">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:id="@+id/editText_enter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/type_anything" />
+                android:hint="@string/enter_editTexthint" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -33,9 +33,9 @@
             android:id="@+id/button_enter_send"
             android:layout_width="62dp"
             android:layout_height="65dp"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/margin_size"
             android:background="@color/colorAccent"
-            android:text="@string/button_text"
+            android:text="@string/enter_button"
             android:layout_gravity="center"/>
 
 

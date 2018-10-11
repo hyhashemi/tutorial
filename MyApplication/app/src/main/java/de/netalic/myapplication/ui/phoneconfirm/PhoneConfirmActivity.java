@@ -20,7 +20,7 @@ public class PhoneConfirmActivity extends BaseActivity{
         }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Activation Code");
+        getSupportActionBar().setTitle(R.string.phoneconfirm_title);
     }
 }
 

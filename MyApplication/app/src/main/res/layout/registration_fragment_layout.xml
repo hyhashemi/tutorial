@@ -11,23 +11,23 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/margin_size"
         android:layout_gravity="center">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/phone_number"
-            android:hint="@string/phone_number"/>
+            android:hint="@string/register_editTexthint"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button_registration_send"
-        android:text="@string/register"
+        android:text="@string/register_button"
         android:background="@color/colorAccent"
         android:layout_gravity="center"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/margin_size"
         android:gravity="center"/>
 
 </LinearLayout>

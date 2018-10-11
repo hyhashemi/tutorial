@@ -35,7 +35,6 @@ public class EnterPresenter implements EnterContract.Presenter{
                   mRegistrationFragment.navigateToShowActivity(response.body());
                 }
                 else{
-                    mRegistrationFragment.notFound();
                 }
             }
 

@@ -3,7 +3,6 @@ package de.netalic.myapplication.ui.phoneconfirm;
 import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -24,15 +23,12 @@ import de.netalic.myapplication.R;
 import de.netalic.myapplication.receiver.ISmsBroadcastReceiver;
 import de.netalic.myapplication.ui.enter.EnterActivity;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class PhoneConfirmFragment extends Fragment implements PhoneConfirmContract.View {
 
     public View mRootView;
     public EditText mActivationEditText;
     public PhoneConfirmPresenter mPhoneConfirmPresenter;
     public String mPhoneNumber;
-    public String mToken;
 
     @Nullable
     @Override
@@ -93,14 +89,6 @@ public class PhoneConfirmFragment extends Fragment implements PhoneConfirmContra
     }
 
     @Override
-    public void saveToken(String token) {
-        this.mToken = token;
-        SharedPreferences.Editor editor = getActivity().getSharedPreferences("token", MODE_PRIVATE).edit();
-        editor.putString("token", mToken);
-        editor.apply();
-    }
-
-    @Override
     public void navigateToShow() {
         Intent enter = new Intent(getContext(), EnterActivity.class);
         startActivity(enter);
@@ -108,7 +96,7 @@ public class PhoneConfirmFragment extends Fragment implements PhoneConfirmContra
 
     @Override
     public void snackbarError() {
-        Snackbar snackbar = Snackbar.make(mRootView, R.string.activation_error, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(mRootView, R.string.phoneconfirm_snackbarerror, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 }

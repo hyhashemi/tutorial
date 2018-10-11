@@ -6,6 +6,7 @@ android {
         applicationId "de.netalic.myapplication"
         minSdkVersion 16
         targetSdkVersion 28
+//        TODO(Hanieh) What is difference?
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

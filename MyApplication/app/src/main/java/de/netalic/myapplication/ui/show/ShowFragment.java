@@ -128,7 +128,7 @@ public class ShowFragment extends Fragment implements ShowContract.View {
 
     private void editAlert() {
         Log.e("edit:", String.valueOf(mPositionClicked));
-        mBuilderEdit.setTitle(R.string.editTitle).setView(mAlertEdit).setMessage(R.string.editNotif)
+        mBuilderEdit.setTitle(R.string.show_edittitle).setView(mAlertEdit).setMessage(R.string.show_editalert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.e("edit:", String.valueOf(mPositionClicked));
@@ -147,7 +147,7 @@ public class ShowFragment extends Fragment implements ShowContract.View {
     }
 
     private void addAlert() {
-        mBuilderAdd.setTitle(R.string.addTitle).setView(mAlertAdd).setMessage(R.string.addNotif)
+        mBuilderAdd.setTitle(R.string.show_addtitle).setView(mAlertAdd).setMessage(R.string.show_addalert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         mData.add(new Speciality(mCounter, mAlertAdd.getText().toString()));

@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Speciality implements Parcelable{
+public class Speciality implements Parcelable {
 
     @SerializedName("id")
     private int mId;
@@ -13,15 +13,30 @@ public class Speciality implements Parcelable{
     @SerializedName("title")
     private String mTitle;
 
-    public Speciality(int id, String title){
+    public Speciality(int id, String title) {
         this.mTitle = title;
         this.mId = id;
     }
 
+    public void setId(int id) {
+        mId = id;
+    }
 
-    public Speciality(Parcel in) {
-        mId = in.readInt();
-        mTitle = in.readString();
+    public int getId() {
+        return mId;
+    }
+
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Speciality> CREATOR = new Creator<Speciality>() {
@@ -36,26 +51,9 @@ public class Speciality implements Parcelable{
         }
     };
 
-
-    public void setId(int id){
-        mId = id;
-    }
-
-    public int getId(){
-        return mId;
-    }
-
-    public void setTitle(String title){
-        mTitle = title;
-    }
-
-    public String getTitle(){
-        return mTitle;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public Speciality(Parcel in) {
+        mId = in.readInt();
+        mTitle = in.readString();
     }
 
     @Override

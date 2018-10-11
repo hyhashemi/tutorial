@@ -48,14 +48,14 @@ public class EnterFragment extends Fragment implements EnterContract.View{
         Toolbar toolbar = mRootView.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setTitle("Enter");
+        activity.getSupportActionBar().setTitle(R.string.enter_title);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mOutput = mEditText.getText().toString();
                 if (mOutput.isEmpty()) {
-                    Snackbar snackbar = Snackbar.make(mRootView, R.string.snackbar_error, Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(mRootView, R.string.enter_snackbarerror, Snackbar.LENGTH_LONG);
                     snackbar.show();
                 } else {
                     mPresenter.request();
@@ -69,10 +69,5 @@ public class EnterFragment extends Fragment implements EnterContract.View{
         Intent show = new Intent(getContext(), ShowActivity.class);
         show.putParcelableArrayListExtra("data", (ArrayList<? extends Parcelable>) specialities);
         startActivity(show);
-    }
-
-    @Override
-    public void notFound() {
-        Toast.makeText(getContext(),R.string.response_error, Toast.LENGTH_LONG);
     }
 }

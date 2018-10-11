@@ -8,11 +8,16 @@ import de.netalic.myapplication.ui.registration.RegistrationActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-      @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //TODO(Hanieh) Decide if user is registered or not
+
         Intent registration = new Intent(getApplicationContext(), RegistrationActivity.class);
         startActivity(registration);
+
+
     }
 }
