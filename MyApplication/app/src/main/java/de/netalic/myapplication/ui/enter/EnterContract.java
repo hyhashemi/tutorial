@@ -3,15 +3,18 @@ package de.netalic.myapplication.ui.enter;
 import java.util.List;
 
 import de.netalic.myapplication.data.model.Speciality;
+import de.netalic.myapplication.data.model.Wallet;
 
 public interface EnterContract {
 
     interface View{
-        void navigateToShowActivity(List<Speciality> specialities);
+        void navigateToShowActivity(List<Speciality> body);
+        void navigateToWalletActivity(List<Wallet> body);
+        void navigateToMapActivity();
     }
 
     interface Presenter{
-
-        void request();
+        void showRequest();
+        void walletRequest(String restoredText);
     }
 }

@@ -1,4 +1,12 @@
 package de.netalic.myapplication.ui.wallet;
 
-public class WalletContract {
+public interface WalletContract {
+
+    interface Presenter{
+
+    }
+
+    interface View{
+
+    }
 }

@@ -34,7 +34,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = mInflater.inflate(R.layout.speciality_layout, parent, false);
+        View view = mInflater.inflate(R.layout.speciality_row_layout, parent, false);
         return new ViewHolder(view);
     }
 

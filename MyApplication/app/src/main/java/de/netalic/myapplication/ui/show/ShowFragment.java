@@ -46,7 +46,7 @@ public class ShowFragment extends Fragment implements ShowContract.View {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_show, null);
+        mRootView = inflater.inflate(R.layout.show_fragment_layout, null);
         mShowPresenter = new ShowPresenter(this);
         setHasOptionsMenu(true);
         return mRootView;
@@ -60,9 +60,9 @@ public class ShowFragment extends Fragment implements ShowContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mData = getArguments().getParcelableArrayList(DATA);
         RecyclerView recyclerView = mRootView.findViewById(R.id.recyclerView_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mData = getArguments().getParcelableArrayList("data");
         mAdapter = new RecyclerAdapter(getContext(), mData);
         recyclerView.setAdapter(mAdapter);
 
@@ -87,13 +87,6 @@ public class ShowFragment extends Fragment implements ShowContract.View {
         mAlertAdd.setLayoutParams(lp2);
     }
 
-    public static ShowFragment newInstance(List<Speciality> specialities) {
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(DATA, (ArrayList<? extends Parcelable>) specialities);
-        ShowFragment fragment = new ShowFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -131,7 +124,6 @@ public class ShowFragment extends Fragment implements ShowContract.View {
         mBuilderEdit.setTitle(R.string.show_edittitle).setView(mAlertEdit).setMessage(R.string.show_editalert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.e("edit:", String.valueOf(mPositionClicked));
                         mData.get(mPositionClicked).setTitle(mAlertEdit.getText().toString());
                         ((ViewGroup) mAlertEdit.getParent()).removeView(mAlertEdit);
                         mAdapter.notifyDataSetChanged();
@@ -170,6 +162,15 @@ public class ShowFragment extends Fragment implements ShowContract.View {
         for (int i = 0; i < mData.size(); i++) {
             db.createRecords(mData.get(i).getId(), mData.get(i).getTitle());
         }
+    }
+
+    public static ShowFragment newInstance(List<Speciality> data) {
+
+        Bundle args = new Bundle();
+        args.putParcelableArrayList("data", (ArrayList<? extends Parcelable>) data);
+        ShowFragment fragment = new ShowFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 }

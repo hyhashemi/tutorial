@@ -7,6 +7,12 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.mapgenius.googlemaps.permission.MAPS_RECEIVE" />
+
+
 
     <application
         android:allowBackup="true"
@@ -16,6 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="ExtraText">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,13 +30,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.enter.EnterActivity" />
+
         <activity android:name=".ui.show.ShowActivity" />
 
-        <activity android:name=".ui.registration.RegistrationActivity"></activity>
+        <activity android:name=".ui.registration.RegistrationActivity" />
+
         <activity android:name=".ui.phoneconfirm.PhoneConfirmActivity" />
 
+        <activity android:name=".ui.wallet.WalletActivity" />
+
+        <activity android:name=".ui.map.MapActivity" />
+
         <receiver android:name=".receiver.ISmsBroadcastReceiver"/>
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAVzSoc1gmzSvPePfOQAYtgPwjQsSDEbO8"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
     </application>
 
