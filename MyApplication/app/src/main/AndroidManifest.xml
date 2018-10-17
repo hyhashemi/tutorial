@@ -11,6 +11,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.mapgenius.googlemaps.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 
 
@@ -41,18 +42,16 @@
 
         <activity android:name=".ui.wallet.WalletActivity" />
 
-        <activity android:name=".ui.map.MapActivity" />
+        <activity android:name=".ui.map.MapActivity"
+            android:hardwareAccelerated="true"/>
 
         <receiver android:name=".receiver.ISmsBroadcastReceiver"/>
 
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAVzSoc1gmzSvPePfOQAYtgPwjQsSDEbO8"/>
+            android:value="AIzaSyCg_jC8Ue8dbVX7Pst6CVVgX5PgXY4mm74"/>
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
 
     </application>
 

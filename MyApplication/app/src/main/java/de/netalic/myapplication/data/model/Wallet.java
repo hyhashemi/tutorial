@@ -5,37 +5,50 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+import io.realm.annotations.RealmField;
 
-public class Wallet implements Parcelable {
+
+public class Wallet  extends RealmObject implements Parcelable{
 
     @SerializedName("currencyCode")
+    @RealmField(name = "currencyCode")
     private String mCurrencyCode;
 
     @SerializedName("id")
+    @RealmField(name = "id")
     private int mId;
 
     @SerializedName("spendableBalance")
+    @RealmField(name = "spendableBalance")
     private double mSpendableBalance;
 
     @SerializedName("modifiedAt")
+    @RealmField(name = "modifiedAt")
     private String mModifiedAt;
 
     @SerializedName("name")
+    @RealmField(name = "name")
     private String mName;
 
     @SerializedName("createdAt")
+    @RealmField(name = "createdAt")
     private String mCreatedAt;
 
     @SerializedName("ownerId")
+    @RealmField(name = "ownerId")
     private int mOwnerId;
 
     @SerializedName("balance")
+    @RealmField(name = "balance")
     private double mBalance;
 
     @SerializedName("address")
+    @RealmField(name = "address")
     private String mAddress;
 
     @SerializedName("currencySymbol")
+    @RealmField(name = "currencySymbol")
     private String mCurrencySymbol;
 
     protected Wallet(Parcel in) {

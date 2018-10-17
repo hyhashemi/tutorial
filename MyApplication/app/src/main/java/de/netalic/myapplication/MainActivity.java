@@ -12,12 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //TODO(Hanieh) Decide if user is registered or not
-
         Intent registration = new Intent(getApplicationContext(), RegistrationActivity.class);
         startActivity(registration);
-
-
     }
 }

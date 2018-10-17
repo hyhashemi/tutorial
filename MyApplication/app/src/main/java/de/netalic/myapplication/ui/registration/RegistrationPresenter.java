@@ -30,6 +30,7 @@ public class RegistrationPresenter implements RegistrationContract.Presenter {
 
     public void claimRequest(final String phoneNumber){
 
+
         apiInterface.claim("2b6f0cc904d137be2e1730235f5664094b831186", phoneNumber).enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {

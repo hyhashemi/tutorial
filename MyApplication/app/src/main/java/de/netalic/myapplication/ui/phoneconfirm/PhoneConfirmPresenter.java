@@ -25,6 +25,7 @@ public class PhoneConfirmPresenter implements PhoneConfirmContract.Presenter {
 
     private ApiInterface mApiInterface;
     private PhoneConfirmFragment mPhoneConfirmFragment;
+    private String mPhoneNumber;
 
     private String mToken;
 
@@ -45,6 +46,7 @@ public class PhoneConfirmPresenter implements PhoneConfirmContract.Presenter {
                 if (response.code() == 200){
                     JsonObject jsonObject = response.body();
                     mToken = jsonObject.get("token").getAsString();
+                    mPhoneNumber = phoneNumber;
                     saveToken();
                     mPhoneConfirmFragment.navigateToShow();
                 }
@@ -66,6 +68,7 @@ public class PhoneConfirmPresenter implements PhoneConfirmContract.Presenter {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mPhoneConfirmFragment.getContext());
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("token", mToken);
+        editor.putString("phone", mPhoneNumber);
         editor.apply();
     }
 }
