@@ -66,11 +66,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             mId = itemView.findViewById(R.id.textView_speciality_id);
             mTitle = itemView.findViewById(R.id.textView_speciality_title);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View view) {
+                public boolean onLongClick(View view) {
                     mSelectedItem = getAdapterPosition();
                     notifyDataSetChanged();
+                    return true;
                 }
             });
         }

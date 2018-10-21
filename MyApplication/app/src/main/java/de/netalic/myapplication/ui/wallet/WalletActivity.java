@@ -14,7 +14,6 @@ public class WalletActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_activity_layout);
-
         WalletFragment walletFragment = (WalletFragment) getSupportFragmentManager().findFragmentById(R.id.wallet_fragment_layout);
 
         List<Wallet> data = getIntent().getParcelableArrayListExtra("data");

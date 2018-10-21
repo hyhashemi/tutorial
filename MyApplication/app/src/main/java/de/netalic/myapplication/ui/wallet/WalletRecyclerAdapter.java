@@ -2,6 +2,7 @@ package de.netalic.myapplication.ui.wallet;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,11 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<WalletRecyclerAd
     private LayoutInflater mLayoutInflater;
     private Context mContext;
     private List<Wallet> mData;
-    private TextView textView_name;
-    private TextView textView_balance;
-    private TextView textView_currency;
-    private TextView textView_address;
+    private int mSelectedItem = -1;
+
+    public int getSelectedItem() {
+        return mSelectedItem;
+    }
 
     public WalletRecyclerAdapter(Context context, List<Wallet> data) {
         this.mLayoutInflater = LayoutInflater.from(context);
@@ -38,11 +40,15 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<WalletRecyclerAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        textView_name.setText("name: " + mData.get(i).getName());
-        textView_currency.setText("currency code: " + mData.get(i).getCurrencyCode());
-        textView_balance.setText(String.valueOf("balance: " + mData.get(i).getBalance()));
-        textView_address.setText(String.valueOf("address: "+ mData.get(i).getAddress()));
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+        viewHolder.textView_name.setText("name: " + mData.get(i).getName());
+        viewHolder.textView_balance.setText(String.valueOf("balance: " + mData.get(i).getBalance()));
+
+        if (mSelectedItem >= 0 && i == mSelectedItem) {
+            viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+        } else {
+            viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.getContext(), android.R.color.white));
+        }
     }
 
     @Override
@@ -52,13 +58,27 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<WalletRecyclerAd
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View view ){
-            super(view);
-            textView_name = view.findViewById(R.id.textView_name_wallet);
-            textView_balance = view.findViewById(R.id.textView_balance_wallet);
-            textView_currency = view.findViewById(R.id.textView_currencyCode_wallet);
-            textView_address = view.findViewById(R.id.textView_address_wallet);
+
+        private TextView textView_name;
+        private TextView textView_balance;
+
+        public ViewHolder(View itemView ){
+            super(itemView);
+            textView_name = itemView.findViewById(R.id.textView_name_wallet);
+            textView_balance = itemView.findViewById(R.id.textView_balance_wallet);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mSelectedItem = getAdapterPosition();
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
+
         }
     }
+
+
 
 }

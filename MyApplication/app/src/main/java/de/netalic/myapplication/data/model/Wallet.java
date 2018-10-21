@@ -51,7 +51,7 @@ public class Wallet  extends RealmObject implements Parcelable{
     @RealmField(name = "currencySymbol")
     private String mCurrencySymbol;
 
-    protected Wallet(Parcel in) {
+    public Wallet(Parcel in) {
         mCurrencyCode = in.readString();
         mId = in.readInt();
         mSpendableBalance = in.readDouble();
@@ -75,6 +75,10 @@ public class Wallet  extends RealmObject implements Parcelable{
             return new Wallet[size];
         }
     };
+
+    public Wallet() {
+
+    }
 
     @Override
     public int describeContents() {
@@ -109,5 +113,21 @@ public class Wallet  extends RealmObject implements Parcelable{
 
     public String getAddress() {
         return mAddress;
+    }
+
+    public void setBalance(int balance){
+        this.mBalance = balance;
+    }
+
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
+    public void setCurrencyCode(String mCurrencyCode) {
+        this.mCurrencyCode = mCurrencyCode;
+    }
+
+    public void setAddress(String mAddress) {
+        this.mAddress = mAddress;
     }
 }
