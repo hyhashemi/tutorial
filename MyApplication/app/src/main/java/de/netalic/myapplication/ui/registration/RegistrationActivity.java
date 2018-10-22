@@ -16,5 +16,6 @@ public class RegistrationActivity extends BaseActivity{
             fragment = new RegistrationFragment();
             replaceFragment(fragment, R.id.registration_fragment_container);
         }
+        setUpToolbar(R.string.register_title);
     }
 }

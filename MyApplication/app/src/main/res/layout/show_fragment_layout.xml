@@ -5,8 +5,6 @@
     android:id="@+id/layout_show_fragment"
     android:orientation="vertical">
 
-    <include layout="@layout/show_toolbar" />
-
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

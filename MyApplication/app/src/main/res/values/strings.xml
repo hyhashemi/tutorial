@@ -8,8 +8,12 @@
     <string name="show_editicon">edit</string>
     <string name="show_addalert">Are you sure you want to add this entry?</string>
     <string name="show_addtitle">Add this speciality:</string>
+    <string name="wallet_addalert">Are you sure you want to add this entry?</string>
+    <string name="wallet_addtitle">Add this wallet:</string>
     <string name="show_edittitle">Edit this speciality:</string>
     <string name="show_editalert">Are you sure you want to edit this entry?</string>
+    <string name="wallet_edittitle">Edit this wallet:</string>
+    <string name="wallet_editalert">Are you sure you want to edit this entry?</string>
     <string name="register_editTexthint">Phone Number</string>
     <string name="phoneconfirm_title">"Activation Code"</string>
     <string name="register_title">register</string>
@@ -18,7 +22,10 @@
     <string name="enter_editTexthint">Navigate to wallet, speciality, map</string>
     <string name="phoneconfirm_hint">Activation code</string>
     <string name="register_button">register</string>
-    <string name="enter_title">Enter</string>
+    <string name="enter_title">Navigate</string>
     <string name="phoneconfirm_snackbarerror">Activation code is not valid</string>
     <string name="wallet_title">Wallet</string>
+    <string name="wallet_balance_snackvarerror">Balance should be a number</string>
+    <string name="wallet_name_snackbarerror">Name is empty</string>
+    <string name="show_title">Speciality</string>
 </resources>

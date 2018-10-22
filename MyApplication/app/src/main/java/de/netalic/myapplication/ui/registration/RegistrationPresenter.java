@@ -5,11 +5,10 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import de.netalic.myapplication.data.remote.ApiInterface;
+import de.netalic.myapplication.data.remote.ApiClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistrationPresenter implements RegistrationContract.Presenter {
 
@@ -19,18 +18,13 @@ public class RegistrationPresenter implements RegistrationContract.Presenter {
 
     public RegistrationPresenter(RegistrationFragment registrationFragment) {
         this.mRegistrationFragment = registrationFragment;
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://nightly.alpha.carrene.com/")
-                .addConverterFactory(GsonConverterFactory.create());
 
-        Retrofit retrofit = builder.build();
-        apiInterface = retrofit.create(ApiInterface.class);
     }
 
 
     public void claimRequest(final String phoneNumber){
 
-
+        apiInterface = ApiClient.getApiInterface("http://nightly.alpha.carrene.com/");
         apiInterface.claim("2b6f0cc904d137be2e1730235f5664094b831186", phoneNumber).enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {

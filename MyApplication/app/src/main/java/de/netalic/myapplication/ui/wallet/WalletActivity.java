@@ -21,5 +21,6 @@ public class WalletActivity extends BaseActivity {
             walletFragment = WalletFragment.newInstance(data);
             replaceFragment(walletFragment, R.id.wallet_fragment_container);
         }
+        setUpToolbar(R.string.wallet_title);
     }
 }

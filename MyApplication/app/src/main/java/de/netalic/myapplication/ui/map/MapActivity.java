@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -28,9 +29,9 @@ import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener{
 
-    public final int LOCATION_REQUEST_CODE = 99;
+    public static final int LOCATION_REQUEST_CODE = 99;
     public GoogleApiClient googleApiClient;
-    public GoogleMap mMap;
+    private GoogleMap mMap;
     public SupportMapFragment mapFragment;
 
     @Override
@@ -118,6 +119,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onLocationChanged(Location location) {
         MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("You are Here");
         mMap.addMarker(markerOptions);
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
     }
 
     @Override

@@ -7,6 +7,7 @@ public interface WalletContract {
     }
 
     interface View{
-
+        void balanceSnackbarError();
+        void nameSnackbarError();
     }
 }

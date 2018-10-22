@@ -1,8 +1,6 @@
 package de.netalic.myapplication.ui.show;
 
-import java.util.List;
-
-import de.netalic.myapplication.data.model.Speciality;
+import de.netalic.myapplication.data.database.MyDatabase;
 
 public interface ShowContract {
 
@@ -10,7 +8,6 @@ public interface ShowContract {
     }
 
     interface Presenter{
-        List<Speciality> getData();
-
+        void pushToDataBase(MyDatabase db);
     }
 }

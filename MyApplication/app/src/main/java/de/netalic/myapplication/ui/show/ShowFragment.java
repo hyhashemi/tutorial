@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,8 +24,9 @@ import java.util.List;
 import de.netalic.myapplication.R;
 import de.netalic.myapplication.data.database.MyDatabase;
 import de.netalic.myapplication.data.model.Speciality;
+import de.netalic.myapplication.ui.Base.BaseFragment;
 
-public class ShowFragment extends Fragment implements ShowContract.View {
+public class ShowFragment extends BaseFragment implements ShowContract.View {
 
     private View mRootView;
     private ShowContract.Presenter mShowPresenter;
@@ -48,6 +46,7 @@ public class ShowFragment extends Fragment implements ShowContract.View {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.show_fragment_layout, null);
         mShowPresenter = new ShowPresenter(this);
+        mData = getArguments().getParcelableArrayList(DATA);
         setHasOptionsMenu(true);
         return mRootView;
     }
@@ -60,33 +59,34 @@ public class ShowFragment extends Fragment implements ShowContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initUi();
+        initAlertUi();
+    }
+
+    @Override
+    public void initUi() {
         RecyclerView recyclerView = mRootView.findViewById(R.id.recyclerView_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mData = getArguments().getParcelableArrayList("data");
         mAdapter = new RecyclerAdapter(getContext(), mData);
         recyclerView.setAdapter(mAdapter);
+    }
 
-        Toolbar toolbar = mRootView.findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setTitle("Specialities");
-
+    public void initAlertUi(){
         mBuilderEdit = new AlertDialog.Builder(getContext());
         mBuilderAdd = new AlertDialog.Builder(getContext());
 
         mAlertEdit = new EditText(getContext());
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams layoutParamsAdd = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
-        mAlertEdit.setLayoutParams(lp);
+        mAlertEdit.setLayoutParams(layoutParamsAdd);
 
         mAlertAdd = new EditText(getContext());
-        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams layoutParamsEdit = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
-        mAlertAdd.setLayoutParams(lp2);
+        mAlertAdd.setLayoutParams(layoutParamsEdit);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -158,16 +158,13 @@ public class ShowFragment extends Fragment implements ShowContract.View {
 
     private void pushToDatabase() {
         MyDatabase db = new MyDatabase(getContext());
-        db.deleteDatabase();
-        for (int i = 0; i < mData.size(); i++) {
-            db.createRecords(mData.get(i).getId(), mData.get(i).getTitle());
-        }
+        mShowPresenter.pushToDataBase(db);
     }
 
     public static ShowFragment newInstance(List<Speciality> data) {
 
         Bundle args = new Bundle();
-        args.putParcelableArrayList("data", (ArrayList<? extends Parcelable>) data);
+        args.putParcelableArrayList(DATA, (ArrayList<? extends Parcelable>) data);
         ShowFragment fragment = new ShowFragment();
         fragment.setArguments(args);
         return fragment;

@@ -17,5 +17,7 @@ public class EnterActivity extends BaseActivity {
             enterFragment = new EnterFragment();
             replaceFragment(enterFragment, R.id.enter_fragment_container);
         }
+
+        setUpToolbar(R.string.enter_title);
     }
 }

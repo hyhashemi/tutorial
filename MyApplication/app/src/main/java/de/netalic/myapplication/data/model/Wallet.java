@@ -8,60 +8,64 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.annotations.RealmField;
 
-
 public class Wallet  extends RealmObject implements Parcelable{
 
     @SerializedName("currencyCode")
-    @RealmField(name = "currencyCode")
+    @RealmField(name = "CurrencyCode")
     private String mCurrencyCode;
 
     @SerializedName("id")
-    @RealmField(name = "id")
+    @RealmField(name = "Id")
     private int mId;
 
     @SerializedName("spendableBalance")
-    @RealmField(name = "spendableBalance")
+    @RealmField(name = "SpendableBalance")
     private double mSpendableBalance;
 
     @SerializedName("modifiedAt")
-    @RealmField(name = "modifiedAt")
+    @RealmField(name = "ModifiedAt")
     private String mModifiedAt;
 
     @SerializedName("name")
-    @RealmField(name = "name")
+    @RealmField(name = "Name")
     private String mName;
 
     @SerializedName("createdAt")
-    @RealmField(name = "createdAt")
+    @RealmField(name = "CreatedAt")
     private String mCreatedAt;
 
     @SerializedName("ownerId")
-    @RealmField(name = "ownerId")
+    @RealmField(name = "OwnerId")
     private int mOwnerId;
 
     @SerializedName("balance")
-    @RealmField(name = "balance")
+    @RealmField(name = "Balance")
     private double mBalance;
 
     @SerializedName("address")
-    @RealmField(name = "address")
+    @RealmField(name = "Address")
     private String mAddress;
 
     @SerializedName("currencySymbol")
-    @RealmField(name = "currencySymbol")
+    @RealmField(name = "CurrencySymbol")
     private String mCurrencySymbol;
 
-    public Wallet(Parcel in) {
-        mCurrencyCode = in.readString();
-        mId = in.readInt();
-        mSpendableBalance = in.readDouble();
-        mModifiedAt = in.readString();
-        mName = in.readString();
-        mCreatedAt = in.readString();
-        mOwnerId = in.readInt();
-        mBalance = in.readDouble();
-        mAddress = in.readString();
-        mCurrencySymbol = in.readString();
+
+    public String getName() {
+        return mName;
+    }
+
+    public double getBalance() {
+        return mBalance;
+    }
+
+
+    public void setBalance(int balance){
+        this.mBalance = balance;
+    }
+
+    public void setName(String name) {
+        this.mName = name;
     }
 
     public static final Creator<Wallet> CREATOR = new Creator<Wallet>() {
@@ -75,6 +79,19 @@ public class Wallet  extends RealmObject implements Parcelable{
             return new Wallet[size];
         }
     };
+
+    public Wallet(Parcel in) {
+        mCurrencyCode = in.readString();
+        mId = in.readInt();
+        mSpendableBalance = in.readDouble();
+        mModifiedAt = in.readString();
+        mName = in.readString();
+        mCreatedAt = in.readString();
+        mOwnerId = in.readInt();
+        mBalance = in.readDouble();
+        mAddress = in.readString();
+        mCurrencySymbol = in.readString();
+    }
 
     public Wallet() {
 
@@ -99,35 +116,4 @@ public class Wallet  extends RealmObject implements Parcelable{
         parcel.writeString(mCurrencySymbol);
     }
 
-    public String getName() {
-        return mName;
-    }
-
-    public double getBalance() {
-        return mBalance;
-    }
-
-    public String getCurrencyCode() {
-        return mCurrencyCode;
-    }
-
-    public String getAddress() {
-        return mAddress;
-    }
-
-    public void setBalance(int balance){
-        this.mBalance = balance;
-    }
-
-    public void setName(String mName) {
-        this.mName = mName;
-    }
-
-    public void setCurrencyCode(String mCurrencyCode) {
-        this.mCurrencyCode = mCurrencyCode;
-    }
-
-    public void setAddress(String mAddress) {
-        this.mAddress = mAddress;
-    }
 }

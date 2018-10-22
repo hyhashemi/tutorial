@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,15 +23,13 @@ import java.util.List;
 
 import de.netalic.myapplication.R;
 import de.netalic.myapplication.data.model.Wallet;
-import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
+import de.netalic.myapplication.ui.Base.BaseFragment;
 
-public class WalletFragment extends Fragment implements WalletContract.View{
+public class WalletFragment extends BaseFragment implements WalletContract.View{
 
     private View mRootView;
     private WalletPresenter mWalletPresenter;
-    private List<Wallet> mData;
+    public List<Wallet> mData;
     private WalletRecyclerAdapter mWalletRecyclerAdapter;
     private int mPositionClicked;
     private AlertDialog.Builder mBuilderEdit;
@@ -42,37 +38,33 @@ public class WalletFragment extends Fragment implements WalletContract.View{
     private EditText mAlertEditBalance;
     private EditText mAlertAddName;
     private EditText mAlertAddBalance;
-    private LinearLayout addAlertLayout;
+    private LinearLayout mAddAlertLayout;
     private LinearLayout editAlertLayout;
-    private Realm realm;
+    private final static String DATA="data";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.wallet_fragment_layout, container, false );
+        mData = getArguments().getParcelableArrayList(DATA);
         mWalletPresenter = new WalletPresenter(this);
         setHasOptionsMenu(true);
-        Realm.init(getContext());
         return mRootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        initUi();
+        mWalletPresenter.writeToRealm();
+    }
+
+    @Override
+    public void initUi() {
         RecyclerView recyclerView = mRootView.findViewById(R.id.wallet_recyclerView_container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mData = getArguments().getParcelableArrayList("data");
         mWalletRecyclerAdapter = new WalletRecyclerAdapter(getContext(), mData);
         recyclerView.setAdapter(mWalletRecyclerAdapter);
-        Toolbar toolbar = mRootView.findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setTitle(R.string.wallet_title);
-        realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        for (int i=0; i < mData.size(); i++){
-            realm.copyToRealm(mData.get(i));
-        }
-        realm.commitTransaction();
+
         mBuilderEdit = new AlertDialog.Builder(getContext());
         mBuilderAdd = new AlertDialog.Builder(getContext());
     }
@@ -126,15 +118,19 @@ public class WalletFragment extends Fragment implements WalletContract.View{
         editAlertLayout.addView(mAlertEditName);
         editAlertLayout.addView(mAlertEditBalance);
 
-        mBuilderEdit.setTitle(R.string.show_edittitle).setView(editAlertLayout).setMessage(R.string.show_editalert)
+        mBuilderEdit.setTitle(R.string.wallet_title).setView(editAlertLayout).setMessage(R.string.wallet_editalert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        mData.get(mPositionClicked).setName(mAlertEditName.getText().toString());
-                        mData.get(mPositionClicked).setBalance(Integer.valueOf(mAlertEditBalance.getText().toString()));
-                        realm.beginTransaction();
-                        realm.insertOrUpdate(mData.get(mPositionClicked));
-                        realm.commitTransaction();
-                        mWalletRecyclerAdapter.notifyDataSetChanged();
+
+                        try{
+                            mData.get(mPositionClicked).setName(mAlertEditName.getText().toString());
+                            mData.get(mPositionClicked).setBalance(Integer.valueOf(mAlertEditBalance.getText().toString()));
+                            mWalletPresenter.editRealm(mPositionClicked);
+                            mWalletRecyclerAdapter.notifyDataSetChanged();
+                        }
+                        catch (Exception e){
+                            balanceSnackbarError();
+                        }
                         editAlertLayout.removeAllViews();
                     }
                 })
@@ -147,12 +143,7 @@ public class WalletFragment extends Fragment implements WalletContract.View{
     }
 
     private void delete(int mPositionClicked) {
-        RealmQuery<Wallet> query = realm.where(Wallet.class);
-        RealmResults<Wallet> skuItems1 = query.findAll();
-        query.equalTo("mName", mData.get(mPositionClicked).getName());
-        realm.beginTransaction();
-        skuItems1.deleteAllFromRealm();
-        realm.commitTransaction();
+        mWalletPresenter.deleteFromRealm(mPositionClicked);
         mData.remove(mPositionClicked);
         mWalletRecyclerAdapter.notifyDataSetChanged();
     }
@@ -160,27 +151,30 @@ public class WalletFragment extends Fragment implements WalletContract.View{
 
     private void addAlert() {
 
-        addAlertLayout = new LinearLayout(getContext());
-        addAlertLayout.setOrientation(LinearLayout.VERTICAL);
+        mAddAlertLayout = new LinearLayout(getContext());
+        mAddAlertLayout.setOrientation(LinearLayout.VERTICAL);
         mAlertAddName = new EditText(getContext());
         mAlertAddName.setHint("name");
         mAlertAddBalance = new EditText(getContext());
         mAlertAddBalance.setHint("balance");
-        addAlertLayout.addView(mAlertAddName);
-        addAlertLayout.addView(mAlertAddBalance);
+        mAddAlertLayout.addView(mAlertAddName);
+        mAddAlertLayout.addView(mAlertAddBalance);
 
-        mBuilderAdd.setTitle(R.string.show_addtitle).setView(addAlertLayout).setMessage(R.string.show_addalert)
+        mBuilderAdd.setTitle(R.string.wallet_addtitle).setView(mAddAlertLayout).setMessage(R.string.wallet_addalert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Wallet wallet = new Wallet();
-                        wallet.setName(mAlertAddName.getText().toString());
-                        wallet.setBalance(Integer.valueOf(mAlertAddBalance.getText().toString()));
-                        realm.beginTransaction();
-                        realm.insertOrUpdate(wallet);
-                        realm.commitTransaction();
-                        mData.add(wallet);
-                        mWalletRecyclerAdapter.notifyDataSetChanged();
-                        addAlertLayout.removeAllViews();
+                        try{
+                            wallet.setBalance(Integer.valueOf(mAlertAddBalance.getText().toString()));
+                            wallet.setName(mAlertAddName.getText().toString());
+                            mWalletPresenter.addToRealm(wallet);
+                            mData.add(wallet);
+                            mWalletRecyclerAdapter.notifyDataSetChanged();
+                        }
+                        catch (Exception e){
+                            balanceSnackbarError();
+                        }
+                        mAddAlertLayout.removeAllViews();
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -189,6 +183,18 @@ public class WalletFragment extends Fragment implements WalletContract.View{
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    @Override
+    public void balanceSnackbarError() {
+        Snackbar snackbar = Snackbar.make(mRootView, R.string.wallet_balance_snackvarerror, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+    @Override
+    public void nameSnackbarError() {
+        Snackbar snackbar = Snackbar.make(mRootView, R.string.wallet_name_snackbarerror, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
 }

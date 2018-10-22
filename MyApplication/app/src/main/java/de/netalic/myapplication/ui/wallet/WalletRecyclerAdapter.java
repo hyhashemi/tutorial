@@ -78,7 +78,4 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<WalletRecyclerAd
 
         }
     }
-
-
-
 }

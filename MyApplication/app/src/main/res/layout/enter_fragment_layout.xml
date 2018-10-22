@@ -6,9 +6,6 @@
     tools:context=".ui.enter.EnterFragment"
     android:orientation="vertical">
 
-    <include layout="@layout/show_toolbar"
-        android:id="@+id/toolbar"/>
-
     <LinearLayout
         android:id="@+id/layout_enter_fragment"
         android:layout_width="match_parent"
@@ -21,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/editText_enter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

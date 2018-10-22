@@ -20,6 +20,8 @@ public class ShowActivity extends BaseActivity{
             showFragment = ShowFragment.newInstance(data);
             replaceFragment(showFragment, R.id.show_fragment_container);
         }
+
+        setUpToolbar(R.string.show_title);
     }
 
 }

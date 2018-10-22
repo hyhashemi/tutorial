@@ -7,9 +7,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import de.netalic.myapplication.R;
+import de.netalic.myapplication.ui.Base.BaseFragment;
 import de.netalic.myapplication.ui.enter.EnterActivity;
 import de.netalic.myapplication.ui.phoneconfirm.PhoneConfirmActivity;
 
-public class RegistrationFragment extends Fragment implements RegistrationContract.View {
+public class RegistrationFragment extends BaseFragment implements RegistrationContract.View {
 
     public View mRootView;
     public RegistrationPresenter mRegistrationPresenter;
@@ -39,14 +37,12 @@ public class RegistrationFragment extends Fragment implements RegistrationContra
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mEditText = mRootView.findViewById(R.id.phone_number);
-        mPhoneNumber = mEditText.getText().toString();
-        mButton = mRootView.findViewById(R.id.button_registration_send);
-        Toolbar toolbar = mRootView.findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setTitle("Register");
+        initUi();
+        initListener();
+    }
 
+    @Override
+    public void initListener() {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,9 +54,16 @@ public class RegistrationFragment extends Fragment implements RegistrationContra
                     navigateToEnter();
                 }else{
                     mRegistrationPresenter.claimRequest(mPhoneNumber);
-                    }
+                }
             }
         });
+    }
+
+    @Override
+    public void initUi() {
+        mEditText = mRootView.findViewById(R.id.phone_number);
+        mPhoneNumber = mEditText.getText().toString();
+        mButton = mRootView.findViewById(R.id.button_registration_send);
     }
 
     @Override

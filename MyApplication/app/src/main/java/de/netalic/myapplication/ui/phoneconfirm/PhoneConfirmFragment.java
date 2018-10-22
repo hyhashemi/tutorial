@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,18 +20,26 @@ import android.widget.EditText;
 
 import de.netalic.myapplication.R;
 import de.netalic.myapplication.receiver.ISmsBroadcastReceiver;
+import de.netalic.myapplication.ui.Base.BaseFragment;
 import de.netalic.myapplication.ui.enter.EnterActivity;
 
-public class PhoneConfirmFragment extends Fragment implements PhoneConfirmContract.View {
+public class PhoneConfirmFragment extends BaseFragment implements PhoneConfirmContract.View {
 
     public View mRootView;
     public EditText mActivationEditText;
     public PhoneConfirmPresenter mPhoneConfirmPresenter;
     public String mPhoneNumber;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mPhoneNumber = getArguments().getString("phoneNumber");
         mRootView = inflater.inflate(R.layout.phone_confirm_fragment_layout, container, false);
         return mRootView;
     }
@@ -40,8 +47,28 @@ public class PhoneConfirmFragment extends Fragment implements PhoneConfirmContra
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mPhoneConfirmPresenter = new PhoneConfirmPresenter(this);
+        initUi();
+        initListener();
+        checkPermission();
+
+        ISmsBroadcastReceiver ISmsBroadcastReceiver = new ISmsBroadcastReceiver(new ISmsBroadcastReceiver.ISmsInterface() {
+            @Override
+            public void onDone(String text) {
+                mActivationEditText.setText(text);
+            }
+        });
+
+        getActivity().registerReceiver(ISmsBroadcastReceiver, new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
+
+    }
+
+    @Override
+    public void initUi() {
         mActivationEditText = mRootView.findViewById(R.id.editText_activation_code);
-        mPhoneNumber = getArguments().getString("phoneNumber");
+    }
+
+    @Override
+    public void initListener() {
         mActivationEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -60,23 +87,11 @@ public class PhoneConfirmFragment extends Fragment implements PhoneConfirmContra
 
             }
         });
-        checkPermission();
-
-        ISmsBroadcastReceiver ISmsBroadcastReceiver = new ISmsBroadcastReceiver(new ISmsBroadcastReceiver.ISmsInterface() {
-            @Override
-            public void onDone(String text) {
-                mActivationEditText.setText(text);
-            }
-        });
-
-        getActivity().registerReceiver(ISmsBroadcastReceiver, new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
-
     }
 
     public static PhoneConfirmFragment newInstance(Bundle extras) {
-        Bundle args = extras;
         PhoneConfirmFragment fragment = new PhoneConfirmFragment();
-        fragment.setArguments(args);
+        fragment.setArguments(extras);
         return fragment;
     }
 

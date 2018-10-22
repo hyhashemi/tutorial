@@ -2,7 +2,6 @@ package de.netalic.myapplication.ui.phoneconfirm;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 
 import de.netalic.myapplication.R;
 import de.netalic.myapplication.ui.Base.BaseActivity;
@@ -18,9 +17,7 @@ public class PhoneConfirmActivity extends BaseActivity{
             fragment = PhoneConfirmFragment.newInstance(extras);
             replaceFragment(fragment, R.id.phone_confirm_fragment_container);
         }
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.phoneconfirm_title);
+        setUpToolbar(R.string.phoneconfirm_title);
     }
 }
 

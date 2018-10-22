@@ -1,6 +1,5 @@
 package de.netalic.myapplication.ui.enter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,17 +7,14 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.internal.ParcelableSparseArray;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +22,25 @@ import java.util.List;
 import de.netalic.myapplication.R;
 import de.netalic.myapplication.data.model.Speciality;
 import de.netalic.myapplication.data.model.Wallet;
+import de.netalic.myapplication.ui.Base.BaseFragment;
 import de.netalic.myapplication.ui.map.MapActivity;
 import de.netalic.myapplication.ui.show.ShowActivity;
 import de.netalic.myapplication.ui.wallet.WalletActivity;
 
-import static android.content.Context.MODE_PRIVATE;
-
-public class EnterFragment extends Fragment implements EnterContract.View{
+public class EnterFragment extends BaseFragment implements EnterContract.View{
 
     private View mRootView;
-    private EditText mEditText;
+    private AutoCompleteTextView mEditText;
     private EnterContract.Presenter mPresenter;
-    private String mOutput;
+    private String mEditTextOutput;
+    private final String[] views = {"speciality", "map", "wallet"};
+    private Button mButton;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.enter_fragment_layout, null);
-        Log.e("Registration fragment", "onCreateView: ");
         mPresenter = new EnterPresenter(this);
         return mRootView;
     }
@@ -51,27 +48,35 @@ public class EnterFragment extends Fragment implements EnterContract.View{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button button = mRootView.findViewById(R.id.button_enter_send);
-        mEditText = mRootView.findViewById(R.id.editText_enter);
-        Toolbar toolbar = mRootView.findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setTitle(R.string.enter_title);
+        initUi();
+        initListener();
+    }
 
-        button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void initUi() {
+        mButton = mRootView.findViewById(R.id.button_enter_send);
+        mEditText = mRootView.findViewById(R.id.editText_enter);
+        ArrayAdapter arrayAdapter = new ArrayAdapter<>(getContext(),android.R.layout.select_dialog_singlechoice, views);
+        mEditText.setThreshold(1);
+        mEditText.setAdapter(arrayAdapter);
+    }
+
+    @Override
+    public void initListener() {
+        mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOutput = mEditText.getText().toString();
-                switch(mOutput){
-                    case("s"):
+                mEditTextOutput = mEditText.getText().toString();
+                switch(mEditTextOutput){
+                    case "speciality":
                         mPresenter.showRequest();
                         break;
 
-                    case("m"):
+                    case "map":
                         navigateToMapActivity();
                         break;
 
-                    case("w"):
+                    case "wallet":
                         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
                         String token = sharedPref.getString("token", "default" );
                         Log.e("token", token );
