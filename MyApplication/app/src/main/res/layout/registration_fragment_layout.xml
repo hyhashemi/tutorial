@@ -13,7 +13,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/phone_number"
+            android:id="@+id/registration_phone_number"
             android:hint="@string/register_editTexthint"/>
     </android.support.design.widget.TextInputLayout>
 

@@ -1,12 +1,10 @@
 package de.netalic.myapplication.ui.phoneconfirm;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 import com.google.gson.JsonObject;
 
 import de.netalic.myapplication.data.remote.ApiClient;
 import de.netalic.myapplication.data.remote.ApiInterface;
+import de.netalic.myapplication.utils.SharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,22 +15,19 @@ public class PhoneConfirmPresenter implements PhoneConfirmContract.Presenter {
     private PhoneConfirmFragment mPhoneConfirmFragment;
     private String mPhoneNumber;
 
-    private String mToken;
-
     public PhoneConfirmPresenter(PhoneConfirmFragment phoneConfirmFragment){
         this.mPhoneConfirmFragment = phoneConfirmFragment;
     }
 
-    public void bindRequest(String activationCode, final String phoneNumber){
+    public void bindRequest(String activationCode, final String phoneNumber, String udId, String deviceName){
         mApiInterface = ApiClient.getApiInterface("http://nightly.alpha.carrene.com/");
-        mApiInterface.bind("2b6f0cc904d137be2e1730235f5664094b831186", phoneNumber, "SM-12345678", activationCode).enqueue(new Callback<JsonObject>() {
+        mApiInterface.bind(udId, phoneNumber, deviceName, activationCode).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.code() == 200){
-                    JsonObject jsonObject = response.body();
-                    mToken = jsonObject.get("token").getAsString();
                     mPhoneNumber = phoneNumber;
-                    saveToken();
+                    SharedPreference sharedPref = new SharedPreference(mPhoneConfirmFragment.getActivity().getApplicationContext());
+                    sharedPref.setPhoneNumber(mPhoneNumber);
                     mPhoneConfirmFragment.navigateToShow();
                 }
                 else{
@@ -42,18 +37,9 @@ public class PhoneConfirmPresenter implements PhoneConfirmContract.Presenter {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-
+                mPhoneConfirmFragment.snackbarError();
             }
         });
-
-
     }
 
-    private void saveToken() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mPhoneConfirmFragment.getContext());
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("token", mToken);
-        editor.putString("phone", mPhoneNumber);
-        editor.apply();
-    }
 }

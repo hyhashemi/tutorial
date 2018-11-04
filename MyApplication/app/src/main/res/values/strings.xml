@@ -28,4 +28,10 @@
     <string name="wallet_balance_snackvarerror">Balance should be a number</string>
     <string name="wallet_name_snackbarerror">Name is empty</string>
     <string name="show_title">Speciality</string>
+    <string name="preference_title">Settings</string>
+    <string name="preference_checkbox_title">Security</string>
+    <string name="preference_switch_title">Location</string>
+    <string name="preference_checkbox_name">SMS permission</string>
+    <string name="enter_settings">settings</string>
+    <string name="enter_wallets_snackbarerror">Request failed!</string>
 </resources>

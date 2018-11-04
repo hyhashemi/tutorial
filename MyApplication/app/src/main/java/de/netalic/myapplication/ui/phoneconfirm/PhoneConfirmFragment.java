@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,18 +30,14 @@ public class PhoneConfirmFragment extends BaseFragment implements PhoneConfirmCo
     public EditText mActivationEditText;
     public PhoneConfirmPresenter mPhoneConfirmPresenter;
     public String mPhoneNumber;
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+    private String udId;
+    private String mDeviceName;
+    public ISmsBroadcastReceiver mISmsBroadcastReceiver;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mPhoneNumber = getArguments().getString("phoneNumber");
         mRootView = inflater.inflate(R.layout.phone_confirm_fragment_layout, container, false);
+        mPhoneNumber = getArguments().getString("phoneNumber");
         return mRootView;
     }
 
@@ -49,17 +46,27 @@ public class PhoneConfirmFragment extends BaseFragment implements PhoneConfirmCo
         mPhoneConfirmPresenter = new PhoneConfirmPresenter(this);
         initUi();
         initListener();
-        checkPermission();
+        if (ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_SMS}, 1);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECEIVE_SMS}, 1);
+        }
+        if ( ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED){
+            initReceiver();
+        }
+        getDeviceInfo();
 
-        ISmsBroadcastReceiver ISmsBroadcastReceiver = new ISmsBroadcastReceiver(new ISmsBroadcastReceiver.ISmsInterface() {
-            @Override
-            public void onDone(String text) {
-                mActivationEditText.setText(text);
-            }
-        });
+    }
 
-        getActivity().registerReceiver(ISmsBroadcastReceiver, new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
-
+    private void getDeviceInfo() {
+        byte[] udIdBytes = Settings.System.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID).getBytes();
+        StringBuilder sb = new StringBuilder();
+        for (byte b : udIdBytes) {
+            sb.append(String.format("%02X", b));
+        }
+        udId = sb.toString();
+        mDeviceName = android.os.Build.MODEL;
     }
 
     @Override
@@ -78,7 +85,7 @@ public class PhoneConfirmFragment extends BaseFragment implements PhoneConfirmCo
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (mActivationEditText.getText().toString().length() == 6) {
-                    mPhoneConfirmPresenter.bindRequest(mActivationEditText.getText().toString(), mPhoneNumber);
+                    mPhoneConfirmPresenter.bindRequest(mActivationEditText.getText().toString(), mPhoneNumber,udId , mDeviceName);
                 }
             }
 
@@ -89,19 +96,27 @@ public class PhoneConfirmFragment extends BaseFragment implements PhoneConfirmCo
         });
     }
 
+    public void initReceiver(){
+        mISmsBroadcastReceiver = new ISmsBroadcastReceiver(new ISmsBroadcastReceiver.ISmsInterface() {
+            @Override
+            public void onDone(String text) {
+                mActivationEditText.setText(text);
+            }
+        });
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
+        intentFilter.setPriority(9999999);
+        getActivity().registerReceiver(mISmsBroadcastReceiver, intentFilter);
+
+    }
+
     public static PhoneConfirmFragment newInstance(Bundle extras) {
         PhoneConfirmFragment fragment = new PhoneConfirmFragment();
         fragment.setArguments(extras);
         return fragment;
     }
 
-    public void checkPermission() {
-        if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_SMS}, 1);
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECEIVE_SMS}, 1);
-        }
-    }
 
     @Override
     public void navigateToShow() {

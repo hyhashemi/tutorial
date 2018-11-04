@@ -8,7 +8,6 @@ import android.telephony.SmsMessage;
 
 public class ISmsBroadcastReceiver extends BroadcastReceiver {
 
-
     ISmsInterface mISmsInterface;
 
     public interface ISmsInterface {
@@ -47,3 +46,4 @@ public class ISmsBroadcastReceiver extends BroadcastReceiver {
         }
     }
 }
+

@@ -19,10 +19,10 @@ public abstract class BaseActivity extends AppCompatActivity{
         fragmentTransaction.commit();
     }
 
-    public void setUpToolbar(int wallet_title){
+    public void setUpToolbar(int titleResource){
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(wallet_title);
+        getSupportActionBar().setTitle(titleResource);
     }
 
 

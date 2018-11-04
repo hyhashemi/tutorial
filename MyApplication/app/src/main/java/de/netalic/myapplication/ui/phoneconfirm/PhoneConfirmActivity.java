@@ -18,6 +18,8 @@ public class PhoneConfirmActivity extends BaseActivity{
             replaceFragment(fragment, R.id.phone_confirm_fragment_container);
         }
         setUpToolbar(R.string.phoneconfirm_title);
+
     }
+
 }
 

@@ -1,14 +1,11 @@
 package de.netalic.myapplication.ui.enter;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +49,7 @@ public class EnterFragment extends BaseFragment implements EnterContract.View{
         initListener();
     }
 
+
     @Override
     public void initUi() {
         mButton = mRootView.findViewById(R.id.button_enter_send);
@@ -77,10 +75,7 @@ public class EnterFragment extends BaseFragment implements EnterContract.View{
                         break;
 
                     case "wallet":
-                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-                        String token = sharedPref.getString("token", "default" );
-                        Log.e("token", token );
-                        mPresenter.walletRequest(token);
+                        mPresenter.walletRequest();
                         break;
 
                     default:
@@ -114,4 +109,8 @@ public class EnterFragment extends BaseFragment implements EnterContract.View{
         startActivity(wallet);
     }
 
+    public void snackbarError(){
+        Snackbar snackbar = Snackbar.make(mRootView, R.string.enter_wallets_snackbarerror, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
 }

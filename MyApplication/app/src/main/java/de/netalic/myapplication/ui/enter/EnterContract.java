@@ -11,10 +11,11 @@ public interface EnterContract {
         void navigateToShowActivity(List<Speciality> body);
         void navigateToWalletActivity(List<Wallet> body);
         void navigateToMapActivity();
+        void snackbarError();
     }
 
     interface Presenter{
         void showRequest();
-        void walletRequest(String restoredText);
+        void walletRequest();
     }
 }
